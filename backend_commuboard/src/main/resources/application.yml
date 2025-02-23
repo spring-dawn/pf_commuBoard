@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: commuboard
+
+  # 디폴트 환경. 접속 정보 jasypt 적용.
+  datasource:
+    url: jdbc:mysql://localhost:3306/pf_commuboard?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    username: ENC(u8gZUjsXwF6c0TS8f1klS9CfRmTl1auGPGFRxW9jFEDIOuLjnkHxneHP7cGTIk3H)
+    password: ENC(HviEW/kcbBKXCVMbDnQ4hSpF9Kqd0O+OdBwY9r9EuIQ/gMXXiU4HHUGL45kxdgR0)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true # sql log 출력
+    properties:
+      hibernate:
+        format_sql: true # sql log 가독성 좋게 출력
+
+server:
+  #  port: 8080 # 디폴트
+  servlet:
+    session:
+      cookie:
+        name: JSESSIONID_COMMU_BOARD # 디폴트 세션쿠키명 JSESSIONID 쓰면 별개 세션과 중복 가능성 있음
+      timeout: 30m
+    context-path: /
+
+# 프로퍼티 암호화. 패스워드는 vm option.
+jasypt:
+  encryptor:
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    iv-generator-classname: org.jasypt.iv.RandomIvGenerator
+
+---
+# 환경분리. 별도로 명시하지 않은 설정은 디폴트와 동일.
+spring:
+  config:
+    activate:
+      on-profile: notebook
+  datasource:
+    url: jdbc:mysql://localhost:3306/pf_commuboard?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    username: ENC(gZgeXInnK9hqQVF9UqtaCIU3hZO77aQ/3pbg7aWu+DcEpFejuGfFS/BPWn5PAwR3)
+    password: ENC(9MLBeqlNerEfr4MEQUzLPmo1p29sm5g/qXsTx4Uz7expkhT9W8jRRJrAE68Moewt)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+---
+# 운영
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
+  thymeleaf:
+    cache: true
+
+

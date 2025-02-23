@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- *환경 분리는 springProfile 태그 사용 -->
+<configuration>
+    <!-- 공통 프로퍼티 -->
+    <property name="logNm" value="commuboard_dev"/>
+    <property name="basePath" value="../../../logs/pf_commuBoard"/>
+
+    <!-- 콘솔 로그 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--            [eams_dev] 2024-11-14 17:30:45 INFO  [main] com.example.MyClass - Application started successfully-->
+            <pattern>[${logNm}] %d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 파일 로그 (롤링 파일) -->
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${basePath}/${logNm}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${basePath}/${logNm}_%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>[${logNm}] %d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 최상위 로거 설정. 각 어펜더의 name 으로 연결. -->
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rollingFile"/>
+    </root>
+</configuration>
