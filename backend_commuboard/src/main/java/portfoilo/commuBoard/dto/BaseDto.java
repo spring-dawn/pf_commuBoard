@@ -1,12 +1,15 @@
 package portfoilo.commuBoard.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import portfoilo.commuBoard.entity.CommonEntity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseDto {
@@ -17,9 +20,23 @@ public class BaseDto {
 
     private String createId;
     private String updateId;
-    private LocalDate createDtm;
-    private LocalDate updateDtm;
+    private LocalDateTime createDtm;
+    private LocalDateTime updateDtm;
 
+
+    /**
+     * 생성자, 생성일시, 수정자, 수정일시 반환
+     * @param entity CommonEntity 를 상속한 현 엔티티(this)
+     * @return BaseDto
+     */
+    public static BaseDto from(CommonEntity entity) {
+        return BaseDto.builder()
+                .createId(entity.getCreateId())
+                .updateId(entity.getUpdateId())
+                .createDtm(entity.getCreateDtm())
+                .updateDtm(entity.getUpdateDtm())
+                .build();
+    }
 
 
 }
