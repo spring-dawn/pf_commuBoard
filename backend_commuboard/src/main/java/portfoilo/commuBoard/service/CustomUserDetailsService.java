@@ -2,7 +2,6 @@ package portfoilo.commuBoard.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import portfoilo.commuBoard.entity.system.User;
 import portfoilo.commuBoard.repo.UserRepo;
 import portfoilo.commuBoard.util.EntityNm;
-import portfoilo.commuBoard.util.enums.InfoMsg;
+import portfoilo.commuBoard.util.MsgUtil;
 
 @Slf4j
 @Service
@@ -18,6 +17,7 @@ import portfoilo.commuBoard.util.enums.InfoMsg;
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private final MsgUtil msgUtil;
     private final UserRepo repo;
 
     /**
@@ -31,7 +31,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     public User loadUserByUsername(String userId) throws UsernameNotFoundException {
         // 계정 정보 + 권한
         User user = repo.findByUserId(userId)
-                .orElseThrow(() -> new UsernameNotFoundException(InfoMsg.ENTITY_NOT_FOUND.format(EntityNm.USER)));
+                .orElseThrow(() -> new UsernameNotFoundException(
+//                        InfoMsg.ENTITY_NOT_FOUND.format(EntityNm.USER)
+                                msgUtil.getMsg("entity.not_found", EntityNm.USER)
+                        )
+                );
         user.getAuthorities();
 
         log.info("asdf 로그인 정보 조회: "+user.getUserId());
