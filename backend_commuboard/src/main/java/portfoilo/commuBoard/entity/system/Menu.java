@@ -2,6 +2,7 @@ package portfoilo.commuBoard.entity.system;
 
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -56,6 +57,7 @@ public class Menu extends CommonEntity {
     @Comment("참조하는 상위 메뉴")
     private Menu parent;    // 상위 메뉴
 
+    @JsonIgnore
     @OneToMany(mappedBy = "parent")
     private List<Menu> children = new ArrayList<>(); // 하위 메뉴들
 

@@ -34,7 +34,7 @@ public class Role extends CommonEntity {
     @Comment("사용자 역할(등급)명")
     private String roleNm;
 
-    @Column(name = "MEMO", length = 50)
+    @Column(name = "MEMO", length = 200)
     @Comment("역할 내용")
     private String memo;
 
@@ -70,7 +70,7 @@ public class Role extends CommonEntity {
                 .memo(memo)
                 .order(order)
                 .useYn(useYn)
-//                .roleAuthList(roleAuthList == null ? null : roleAuthList.stream().map(RoleAuth::toRes).toList())
+                .roleAuthList(roleAuthList == null ? null : roleAuthList.stream().map(RoleAuth::toRes).toList())
                 .baseDto(BaseDto.from(this))
                 .build();
     }

@@ -66,12 +66,12 @@ public class CommonCode extends CommonEntity {
     // res
     public CommonCodeDto toRes() {
         return CommonCodeDto.builder()
-                .codeNm(this.codeNm)
-                .codeVal(this.codeVal)
-                .memo(this.memo)
-                .useYn(this.useYn)
-                .depth(this.depth)
-                .id(this.id)
+                .codeNm(codeNm)
+                .codeVal(codeVal)
+                .memo(memo)
+                .useYn(useYn)
+                .depth(depth)
+                .id(id)
                 .parentId(parent == null ? null : parent.getId())
                 .children(children == null ? null : children.stream().map(CommonCode::toRes).toList())
                 .build();

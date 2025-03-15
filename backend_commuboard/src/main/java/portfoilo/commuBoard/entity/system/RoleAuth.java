@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
+import portfoilo.commuBoard.dto.system.RoleAuthDto;
 
 
 @Getter
@@ -40,8 +41,15 @@ public class RoleAuth {
 
 
     // res
-//    public RoleAuthDto toRes() {
-//        return new RoleAuthDto(id, auth.getId(), auth.getMenu().getUrl(), auth.getType());
-//    }
+    public RoleAuthDto toRes() {
+        return RoleAuthDto.builder()
+                .id(id)
+                .roleId(role.getId())
+                .authId(auth.getId())
+                .authType(auth.getType())
+                .menuId(auth.getMenu().getId())
+                .menuUrl(auth.getMenu().getUrl())
+                .build();
+    }
 
 }

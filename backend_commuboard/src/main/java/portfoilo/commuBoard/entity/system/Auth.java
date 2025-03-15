@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
+import portfoilo.commuBoard.dto.system.AuthDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,8 @@ public class Auth {
 
 
     // res
-//    public AuthDto toRes() {
-//        return new AuthDto(id, type, menu.getUrl());
-//    }
+    public AuthDto toRes() {
+        return new AuthDto(id, type, menu.getId(), menu.getUrl());
+    }
 
 }
